@@ -1,0 +1,64 @@
+#include<iostream>
+#include<vector>
+#include<iomanip>
+using namespace std;
+
+void selection_sort(vector<int>& arr){
+    int n = arr.size();
+    for(int i=0; i<n-1; i++){
+        int min_index = i;
+        for(int j=i+1; j<n; j++){
+            if(arr[j] < arr[min_index]){
+                min_index = j;
+            }
+        }
+        swap(arr[i], arr[min_index]);
+    }
+}
+
+int main(){
+    int Arr[] = {23,6,34,2,87,4,8,45,65,53};
+    int n = sizeof(Arr)/sizeof(Arr[0]);
+    int temp = n;
+    vector<int> Running_Array;
+    
+    cout << "Input Array: ";
+    for( int a:Arr){
+        cout<<a<<" ";
+    }
+    cout<<endl;
+    double Median;
+    cout << "Array"<< setw(temp+22)<<"Median"<<endl;
+
+    for(int i = 0;i<n;i++ ){
+        
+        Running_Array.push_back(Arr[i]); // add the next element to the running array
+        selection_sort(Running_Array); // sort the running array using selection sort
+
+        int size = Running_Array.size();
+        if (size == 1){
+            Median = Running_Array[0];
+        } else if (size % 2 == 0){
+            int center_index = size / 2;
+            Median = (Running_Array[center_index] + Running_Array[center_index-1]) / 2.0;
+        } else {
+            int center_index = size / 2;
+            Median = Running_Array[center_index];
+        }
+        
+        for(int k : Running_Array ){
+            cout << k << " " ;
+        }
+        
+        temp--;
+        for (int gap = temp+20; gap >=0 ; gap = gap-1 ){
+            cout << " " ;
+            
+        }
+        temp--;
+        printf("%.1f",Median);
+        cout<<endl;
+    }
+    
+    return 0;
+}
